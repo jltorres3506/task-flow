@@ -8,7 +8,6 @@ const UserSchema = new mongoose.Schema({
     username:{type:String},
     firstName: String,
     lastName: String,
-    password: String,
     active: Boolean,
     isAdmin: Boolean
    

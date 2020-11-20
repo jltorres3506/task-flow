@@ -36,15 +36,28 @@ router.route("/register")
                 res.render("auth/register",data);
                 
             }else{
-                // create a new user object
-                const newUser  = new User (data);
-                
-                //register new user
-                User.register(newUser, data.password,(error,user)=>{
-                  
-                    res.render("auth/login",{msg: "You have succesfuly created an account please login using your creds!"});
-                   
+
+               //check to see if email already in system
+                User.findOne({username:data.username},(error,foundUser)=>{
+
+                    if(foundUser !== null){
+                        data.validationError = "Sorry but there is an active account with that email!";
+                        res.render("auth/register",data);
+                    }else{
+
+                        // create a new user object
+                        const newUser  = new User (data);
+                        
+                        //register new user
+                        User.register(newUser, data.password,(error,user)=>{
+                        
+                            res.render("auth/login",{msg: "You have succesfuly created an account please login using your creds!"});
+                        
+                        });
+
+                    }
                 });
+              
             }
           
         });

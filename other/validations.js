@@ -11,12 +11,21 @@ const schema = yup.object().shape({
 
 const isRegisterDataValid = (userData,callback)=>{
 
-    
+    const {firstName, lastName, passcode ,username, password} =userData;
+    const convertedDataToLowerCase ={
 
-       schema.validate(userData)
+        firstName: firstName.toLowerCase(),
+        lastName: lastName.toLowerCase(),
+        passcode: passcode.toLowerCase(),
+        username: username.toLowerCase(),
+        password,
+
+    };
+
+       schema.validate(convertedDataToLowerCase)
         .then(()=>{
 
-            callback(undefined,userData);
+            callback(undefined,convertedDataToLowerCase);
             // res.send("all is good: "+data);
         })
 
@@ -24,7 +33,7 @@ const isRegisterDataValid = (userData,callback)=>{
              
             
 
-            callback(error,userData);
+            callback(error,convertedDataToLowerCase);
             // res.send("you got validation issue: "+errro);
         })
 
