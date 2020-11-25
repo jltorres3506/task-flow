@@ -1,23 +1,23 @@
 const yup = require('yup');
 
 const schema = yup.object().shape({
-    firstName: yup.string().required(),
-    lastName: yup.string().required(),
-    passcode: yup.string().required(),
-    password: yup.string().required().min(7),
-    username: yup.string().required().min(10,"Email must be at least 5 characters").email('Please enter a valid email address'),
+    firstName: yup.string().required().label("First Name"),
+    lastName: yup.string().required().label("Last Name"),
+    passcode: yup.string().required().label("Passcode"),
+    password: yup.string().required().min(7).label("Password"),
+    email: yup.string().required().min(10).email('Please enter a valid email address').label("Email"),
 });
 
 
 const isRegisterDataValid = (userData,callback)=>{
 
-    const {firstName, lastName, passcode ,username, password} =userData;
+    const {firstName, lastName, passcode ,email, password} =userData;
     const convertedDataToLowerCase ={
 
         firstName: firstName.toLowerCase(),
         lastName: lastName.toLowerCase(),
         passcode: passcode.toLowerCase(),
-        username: username.toLowerCase(),
+        email: email.toLowerCase(),
         password,
 
     };

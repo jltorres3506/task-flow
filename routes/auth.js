@@ -5,8 +5,6 @@ const User = require('../models/userModel');
 const isRegisterDataValid = require('../other/validations.js');
 
 
-
-
 router.route("/login")
     .get((req,res)=>{
         res.render("auth/login");
@@ -38,8 +36,9 @@ router.route("/register")
             }else{
 
                //check to see if email already in system
-                User.findOne({username:data.username},(error,foundUser)=>{
+                User.findOne({username:data.email},(error,foundUser)=>{
 
+                    console.log(foundUser);
                     if(foundUser !== null){
                         data.validationError = "Sorry but there is an active account with that email!";
                         res.render("auth/register",data);
@@ -50,7 +49,8 @@ router.route("/register")
                         
                         //register new user
                         User.register(newUser, data.password,(error,user)=>{
-                        
+                            console.log(user);
+                         
                             res.render("auth/login",{msg: "You have succesfuly created an account please login using your creds!"});
                         
                         });
@@ -63,4 +63,7 @@ router.route("/register")
         });
 
     });
-module.exports = router;
+
+
+
+    module.exports = router;
