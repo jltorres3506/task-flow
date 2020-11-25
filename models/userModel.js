@@ -8,8 +8,8 @@ const UserSchema = new mongoose.Schema({
     username:{type:String},
     firstName: String,
     lastName: String,
-    // active: Boolean,
-    // isAdmin: Boolean
+    active: Boolean,
+    isAdmin: Boolean
    
     //Note: given no data this process auto creates username and password
 });

@@ -34,22 +34,25 @@ router.route("/register")
                 res.render("auth/register",data);
                 
             }else{
-
+               
                //check to see if email already in system
-                User.findOne({username:data.email},(error,foundUser)=>{
+                User.findOne({email:data.email},(error,foundUser)=>{
 
-                    console.log(foundUser);
-                    if(foundUser !== null){
+                    if(foundUser){
                         data.validationError = "Sorry but there is an active account with that email!";
                         res.render("auth/register",data);
                     }else{
+
+
+                        data.active = false;
+                        data.isAdmin = false;
 
                         // create a new user object
                         const newUser  = new User (data);
                         
                         //register new user
                         User.register(newUser, data.password,(error,user)=>{
-                            console.log(user);
+                          
                          
                             res.render("auth/login",{msg: "You have succesfuly created an account please login using your creds!"});
                         
