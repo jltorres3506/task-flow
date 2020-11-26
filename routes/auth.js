@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const passport = require("passport");
 
 const User = require('../models/userModel');
 const isRegisterDataValid = require('../other/validations.js');
@@ -10,9 +11,13 @@ router.route("/login")
         res.render("auth/login");
     })  
     
-    .post((req,res)=>{
-        console.log("login submitted");
-    });
+    .post((req,res,next)=>{
+        next();
+    },passport.authenticate("local",{
+        successRedirect: "/auth/pass",
+        failureRedirect:"/auth/fail"
+
+    }));
 
 
 
@@ -68,5 +73,11 @@ router.route("/register")
     });
 
 
+router.get("/pass",(req,res)=>{
+    res.render("pass");
+});
 
+router.get("/fail",(req,res)=>{
+    res.render("fail");
+});
     module.exports = router;
