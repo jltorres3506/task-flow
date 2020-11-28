@@ -8,17 +8,27 @@ const isRegisterDataValid = require('../other/validations.js');
 
 router.route("/login")
     .get((req,res)=>{
-        res.render("auth/login");
+       
+        res.render("auth/login",{message: req.flash("tMsg")});
     })  
     
-    .post((req,res,next)=>{
-        next();
-    },passport.authenticate("local",{
-        successRedirect: "/auth/pass",
-        failureRedirect:"/auth/fail"
-
+    .post( passport.authenticate("local",{
+        successRedirect: "pass",
+        failureRedirect: "fail"
     }));
-
+     
+    // .post((req,res,next)=>{ 
+    //     console.log(req.body);
+    //     if(!req.body){
+    //         req.flash("tMsg", "you have the wrong creds!");
+    //         res.redirect("/auth/login");
+    //     }else{
+    //         next();
+    //     }
+    // },passport.authenticate('local'), function(e,req, res) {
+    //     console.log(res);
+    //    console.log(req.user);
+    // });
 
 
 router.route("/register")
@@ -74,10 +84,20 @@ router.route("/register")
 
 
 router.get("/pass",(req,res)=>{
-    res.render("pass");
+
+    //check to see what kind of user we have admin or reg
+    if(req.user.isAdmin){
+        res.redirect("/manager/");
+    }else{
+        //send to employee section
+        console.log("Employee page route");
+    }
 });
 
 router.get("/fail",(req,res)=>{
-    res.render("fail");
+    req.flash("tMsg", "you have the wrong creds!");
+    res.redirect("/auth/login");
 });
+
+
     module.exports = router;

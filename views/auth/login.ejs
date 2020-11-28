@@ -1,9 +1,10 @@
 <%- include('../partials/header') %>
 
 <div id="login-container" class=" container ">
-  <% if(typeof msg !== "undefined"){%>
-    <p class= "error-styles text-success"><%= msg%></p>
-  <% }%>
+  <%- include('../partials/errorMsg') %>
+  <% if(typeof message !== "undefined"){%>
+    <p class= "error-styles text-danger"><%= message%></p>
+<% }%>
   <div class="row ">
     <div class=" col-8  ">
           <h1 class="title">Login</h1>

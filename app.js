@@ -5,13 +5,16 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const session = require("express-session");
 const app = express();
+var flash = require('connect-flash');
 
 const auth = require(__dirname+"/routes/auth.js");
+const manager = require(__dirname+"/routes/manager.js");
 
 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended:true}));
 app.set("view engine", "ejs");
+app.use(flash());
 
 
 
@@ -40,6 +43,7 @@ app.use(session({
 
 
 app.use("/auth",auth);
+app.use("/manager",manager);
 
 
 
